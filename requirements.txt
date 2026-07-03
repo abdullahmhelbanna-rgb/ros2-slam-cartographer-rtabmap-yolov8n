@@ -1,0 +1,27 @@
+# Python dependencies for the ROS 2 Humble SLAM comparison workspace.
+#
+# ROS 2 packages such as rclpy, sensor_msgs, std_msgs, tf2_ros, nav_msgs,
+# and cv_bridge are installed through ROS 2 / apt / rosdep, not pip.
+#
+# Install with:
+#   python3 -m pip install -r requirements.txt
+#
+# PyTorch is intentionally not pinned here because the correct build depends
+# on whether the experiment machine uses CPU-only PyTorch or an NVIDIA CUDA build.
+# Install the suitable PyTorch build first, then install this file.
+
+# YOLOv8n inference
+ultralytics>=8.0.0
+
+# Image conversion and fusion/visualization nodes
+opencv-python>=4.5.0
+
+# Trajectory-processing and legacy plotting scripts
+numpy>=1.23,<2.0
+matplotlib>=3.5.0
+
+# EVO trajectory evaluation toolkit
+evo>=1.26.0
+
+# Required by the ROS 2 Python package setup
+setuptools>=65.5.0
