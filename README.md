@@ -233,17 +233,24 @@ Accordingly:
 
 ## Repository layout
 
-The repository contains project source code and supporting material, including directories such as:
+The revised repository separates the authoritative reproducibility material from legacy files retained from the initial release.
 
-```text
-figures/
-maps/
-metrics/
-src/
-tools/
-```
+- `REPRODUCIBILITY.md` — evaluation protocol and reproduction notes.
+- `CITATION.cff` — citation metadata.
+- `configs/` — retained Cartographer and official RTAB-Map configurations.
+- `documentation/` — evaluation protocol, software versions, simulation parameters, motion audit, dataset manifest, and provenance limitations.
+- `provenance/` — source commits and configuration SHA-256 records.
+- `metrics/official_aggregates/` — official 10-run aggregate and run-level summary tables for all four configurations.
+- `figures/official_representative/` — representative official Run 01 trajectory outputs.
+- `maps/official_representative/` — archived representative RTAB-Map Run 01 map artifacts.
+- `tools/` — trajectory processing, runtime monitoring, aggregation, and plotting scripts.
+- `src/` — ROS 2 source packages and the concurrent YOLOv8n workload code.
 
-The full 40-run archival dataset should be obtained from the Zenodo release rather than reconstructed from the lightweight GitHub repository alone.
+Older files retained directly under `figures/`, `maps/`, and `metrics/` originate from the initial repository release and are preserved as legacy/reference material. They should not replace the official revised results identified above.
+
+The complete 40-run dataset and full evaluation outputs are archived on Zenodo:
+
+**https://doi.org/10.5281/zenodo.22878936**
 
 ## Data and code availability
 
