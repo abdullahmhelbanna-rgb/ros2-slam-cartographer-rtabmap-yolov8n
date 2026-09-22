@@ -13,7 +13,7 @@
 # YOLOv8n inference
 ultralytics>=8.0.0
 
-# Image conversion and fusion/visualization nodes
+# Image conversion and perception/visualization nodes
 opencv-python>=4.5.0
 
 # Trajectory-processing and legacy plotting scripts
@@ -21,7 +21,7 @@ numpy>=1.23,<2.0
 matplotlib>=3.5.0
 
 # EVO trajectory evaluation toolkit
-evo>=1.26.0
+evo==1.34.3
 
 # Required by the ROS 2 Python package setup
 setuptools>=65.5.0

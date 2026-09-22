@@ -147,3 +147,24 @@ DOI: 10.5281/zenodo.22878936
 https://doi.org/10.5281/zenodo.22878936
 
 GitHub provides source code, retained configurations, lightweight representative material, and documentation. Zenodo is the authoritative archive for the complete analyzed dataset.
+
+## YOLOv8n checkpoint
+
+The YOLOv8n checkpoint retained in this GitHub repository is:
+
+`yolov8n.pt`
+
+SHA-256:
+
+`f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36`
+
+The Zenodo v1.1.0 reproducibility archive does not duplicate the `.pt` checkpoint; the GitHub repository retains this checkpoint as part of the source repository material.
+
+### Checkpoint path used by the archived YOLO node
+
+The archived YOLO node resolves the checkpoint from:
+
+`~/turtlebot3_ws/yolov8n.pt`
+
+For reproduction with the archived source unchanged, place or link the retained
+`yolov8n.pt` checkpoint at that path before launching the YOLO node.

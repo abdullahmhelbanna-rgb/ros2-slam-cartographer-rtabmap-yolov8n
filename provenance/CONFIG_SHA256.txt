@@ -22,3 +22,12 @@ The alternative workspace file:
 turtlebot3_rtab/turtlebot3_rtab/launch/rtab.launch.py
 was not selected as the archived official run configuration because its SHA-256
 does not match the configuration hash recorded for the official experiments.
+
+YOLOv8n checkpoint retained in the GitHub repository:
+yolov8n.pt
+
+SHA256:
+f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+
+The YOLOv8n checkpoint is retained in the GitHub repository for reproducibility.
+The Zenodo v1.1.0 archive does not contain the .pt checkpoint itself.
