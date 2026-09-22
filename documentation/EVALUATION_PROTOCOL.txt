@@ -1,0 +1,111 @@
+FINAL EVALUATION PROTOCOL
+=========================
+
+Configurations
+--------------
+1. Cartographer
+2. Cartographer + YOLOv8n
+3. RTAB-Map
+4. RTAB-Map + YOLOv8n
+
+Repeated trials
+---------------
+10 analyzed runs per configuration.
+40 analyzed runs in total.
+
+Environment
+-----------
+ROS 2 Humble Hawksbill
+Gazebo Classic 11.10.2
+TurtleBot3 Waffle Pi
+small_house.world
+
+Trajectory representation
+-------------------------
+Ground-truth and SLAM trajectories were recorded in TUM format.
+
+Before EVO evaluation, trajectories were converted to planar
+x-y-yaw representation. z, roll, and pitch were removed.
+
+Timestamp association
+---------------------
+Maximum permitted timestamp difference:
+0.02 s
+
+Unmatched poses were excluded.
+No trajectory interpolation was performed.
+
+APE Translation
+---------------
+evo_ape tum GT EST
+--t_max_diff 0.02
+--align_origin
+-r trans_part
+
+APE Yaw
+-------
+evo_ape tum GT EST
+--t_max_diff 0.02
+--align_origin
+-r angle_deg
+
+RPE Translation
+---------------
+evo_rpe tum GT EST
+--t_max_diff 0.02
+--delta 1
+--delta_unit m
+--all_pairs
+-r trans_part
+
+RPE Yaw
+-------
+evo_rpe tum GT EST
+--t_max_diff 0.02
+--delta 1
+--delta_unit m
+--all_pairs
+-r angle_deg
+
+APE uses origin alignment only.
+No full SE(3)/Umeyama best-fit alignment is used.
+
+RPE uses no global alignment.
+
+Statistics
+----------
+Manuscript summary values are reported as mean ± between-run
+sample standard deviation across the 10 runs of each configuration.
+
+Ground-truth isolation
+----------------------
+The Gazebo differential-drive plugin uses:
+
+odometry_source = 0
+
+The /odom topic therefore represents simulated wheel/encoder
+odometry.
+
+Independent Gazebo reference poses are published by the separate
+gazebo_ros_p3d plugin under /ground_truth.
+
+Neither Cartographer nor RTAB-Map subscribes to
+/ground_truth/odom.
+
+YOLO
+----
+YOLOv8n was executed on CPU.
+
+GPU/CUDA inference was not used in the analyzed trials.
+
+Detection outputs were not supplied to Cartographer or RTAB-Map.
+
+Interpretation
+--------------
+Trials were manually teleoperated.
+
+The trajectories were not identical replayed trajectories.
+
+Consequently, differences between baseline and YOLO-active
+groups are descriptive observations and are not interpreted as
+causal estimates of the effect of YOLO workload.

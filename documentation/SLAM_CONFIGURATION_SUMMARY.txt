@@ -1,0 +1,100 @@
+SLAM CONFIGURATION SUMMARY
+==========================
+
+Cartographer
+------------
+Mode:
+2D
+
+tracking_frame:
+base_footprint
+
+published_frame:
+odom
+
+odom_frame:
+odom
+
+provide_odom_frame:
+false
+
+use_odometry:
+true
+
+use_imu_data:
+false
+
+num_laser_scans:
+1
+
+LiDAR minimum range:
+0.12 m
+
+LiDAR maximum range:
+4.5 m
+
+motion_filter.max_angle_radians:
+0.1 degrees
+
+POSE_GRAPH.constraint_builder.min_score:
+0.65
+
+POSE_GRAPH.constraint_builder.global_localization_min_score:
+0.70
+
+Occupancy-grid resolution:
+0.05 m
+
+
+RTAB-Map
+--------
+frame_id:
+base_footprint
+
+map_frame_id:
+map
+
+odom_frame_id:
+empty; nav_msgs/Odometry /odom is used
+
+publish_tf:
+true
+
+subscribe_odom:
+true
+
+subscribe_scan:
+true
+
+subscribe_rgb:
+true
+
+subscribe_depth:
+false
+
+subscribe_rgbd:
+false
+
+approx_sync:
+true
+
+delete_db_on_start:
+true
+
+Reg/Force3DoF:
+true
+
+Reg/Strategy:
+1
+
+Icp/Strategy:
+1
+
+Optimizer/Strategy:
+1
+
+Grid/FromDepth:
+false
+
+IMU input:
+explicitly remapped to /rtabmap_unused_imu

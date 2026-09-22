@@ -1,0 +1,330 @@
+========================================================================
+AGGREGATE RESULTS: cartographer_yolo Experiments 01-10
+========================================================================
+
+Experiments found: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10
+VALID experiments: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10
+Missing experiments: None
+
+IMPORTANT:
+n is calculated independently for each metric.
+A metric with missing measurements in Experiment 01 is NOT filled or imputed.
+Therefore localization metrics may have n=10 while performance metrics may have n=9.
+SD is between-run sample standard deviation (ddof=1).
+
+========================================================================
+MEAN ± BETWEEN-RUN SD
+========================================================================
+
+matched_poses
+  n      : 10
+  Mean±SD: 2381.100000 ± 90.026478
+  Median : 2381.000000
+  Min-Max: 2242.000000 -> 2573.000000
+
+possible_poses
+  n      : 10
+  Mean±SD: 2385.400000 ± 88.506371
+  Median : 2386.000000
+  Min-Max: 2247.000000 -> 2573.000000
+
+matched_percent
+  n      : 10
+  Mean±SD: 99.817507 ± 0.097704
+  Median : 99.784697
+  Min-Max: 99.746085 -> 100.000000
+
+ape_translation_rmse_m
+  n      : 10
+  Mean±SD: 0.031711 ± 0.007119
+  Median : 0.030957
+  Min-Max: 0.022850 -> 0.040545
+
+ape_translation_mean_m
+  n      : 10
+  Mean±SD: 0.028325 ± 0.007225
+  Median : 0.027713
+  Min-Max: 0.018957 -> 0.036388
+
+ape_yaw_rmse_deg
+  n      : 10
+  Mean±SD: 0.911908 ± 0.117963
+  Median : 0.942724
+  Min-Max: 0.705975 -> 1.052233
+
+ape_yaw_mean_deg
+  n      : 10
+  Mean±SD: 0.470291 ± 0.055059
+  Median : 0.475926
+  Min-Max: 0.377138 -> 0.542601
+
+rpe_translation_1m_rmse_m
+  n      : 10
+  Mean±SD: 0.020252 ± 0.001460
+  Median : 0.020193
+  Min-Max: 0.018237 -> 0.022210
+
+rpe_translation_1m_mean_m
+  n      : 10
+  Mean±SD: 0.014523 ± 0.001121
+  Median : 0.014526
+  Min-Max: 0.013108 -> 0.016240
+
+rpe_yaw_1m_rmse_deg
+  n      : 10
+  Mean±SD: 1.292567 ± 0.211497
+  Median : 1.290555
+  Min-Max: 0.979905 -> 1.607354
+
+rpe_yaw_1m_mean_deg
+  n      : 10
+  Mean±SD: 0.707108 ± 0.111225
+  Median : 0.727325
+  Min-Max: 0.541605 -> 0.851050
+
+process_cpu_mean_percent
+  n      : 10
+  Mean±SD: 670.490593 ± 15.740866
+  Median : 669.445138
+  Min-Max: 644.500441 -> 698.230769
+
+process_cpu_p95_percent
+  n      : 10
+  Mean±SD: 828.645500 ± 2.767677
+  Median : 829.092500
+  Min-Max: 824.520000 -> 833.950000
+
+process_ram_mean_mb
+  n      : 10
+  Mean±SD: 867.578496 ± 4.563653
+  Median : 869.459907
+  Min-Max: 859.559130 -> 872.300382
+
+process_ram_p95_mb
+  n      : 10
+  Mean±SD: 889.551445 ± 3.645678
+  Median : 890.636719
+  Min-Max: 880.837109 -> 893.760156
+
+cartographer_cpu_mean_percent
+  n      : 10
+  Mean±SD: 18.153820 ± 0.676505
+  Median : 18.453244
+  Min-Max: 16.661674 -> 18.770954
+
+cartographer_cpu_p95_percent
+  n      : 10
+  Mean±SD: 52.571000 ± 5.818560
+  Median : 53.790000
+  Min-Max: 40.370000 -> 58.910000
+
+cartographer_ram_mean_mb
+  n      : 10
+  Mean±SD: 60.225660 ± 0.933385
+  Median : 60.233318
+  Min-Max: 58.716985 -> 61.635813
+
+cartographer_ram_p95_mb
+  n      : 10
+  Mean±SD: 78.129063 ± 2.850450
+  Median : 78.159277
+  Min-Max: 73.945312 -> 82.617188
+
+yolo_cpu_mean_percent
+  n      : 10
+  Mean±SD: 652.336773 ± 15.500293
+  Median : 650.856857
+  Min-Max: 627.066960 -> 680.123504
+
+yolo_cpu_p95_percent
+  n      : 10
+  Mean±SD: 803.864500 ± 0.109200
+  Median : 803.850000
+  Min-Max: 803.700000 -> 804.000000
+
+yolo_ram_mean_mb
+  n      : 10
+  Mean±SD: 807.352836 ± 4.766636
+  Median : 809.391066
+  Min-Max: 797.923317 -> 812.246042
+
+yolo_ram_p95_mb
+  n      : 10
+  Mean±SD: 814.069648 ± 4.275897
+  Median : 812.863574
+  Min-Max: 808.423047 -> 821.231250
+
+system_cpu_mean_percent
+  n      : 10
+  Mean±SD: 45.799231 ± 0.964096
+  Median : 45.808898
+  Min-Max: 44.371806 -> 47.526923
+
+system_ram_mean_percent
+  n      : 10
+  Mean±SD: 43.553797 ± 0.332839
+  Median : 43.676974
+  Min-Max: 42.874468 -> 43.932110
+
+lidar_rate_hz
+  n      : 10
+  Mean±SD: 7.998745 ± 0.001768
+  Median : 7.999566
+  Min-Max: 7.995191 -> 7.999722
+
+camera_rate_hz
+  n      : 10
+  Mean±SD: 19.797197 ± 0.864307
+  Median : 20.007839
+  Min-Max: 17.925559 -> 20.789227
+
+slam_tf_rate_hz
+  n      : 10
+  Mean±SD: 16.571259 ± 0.222582
+  Median : 16.565933
+  Min-Max: 16.196429 -> 16.898521
+
+slam_tf_latency_mean_ms
+  n      : 10
+  Mean±SD: 50.010072 ± 4.605241
+  Median : 48.706225
+  Min-Max: 46.782120 -> 62.802661
+
+slam_tf_latency_p95_ms
+  n      : 10
+  Mean±SD: 120.255665 ± 1.630581
+  Median : 120.472170
+  Min-Max: 117.873567 -> 122.753221
+
+gazebo_rtf_overall
+  n      : 10
+  Mean±SD: 0.997737 ± 0.000108
+  Median : 0.997724
+  Min-Max: 0.997569 -> 0.997942
+
+yolo_frames_processed
+  n      : 10
+  Mean±SD: 3586.800000 ± 264.929257
+  Median : 3556.000000
+  Min-Max: 3285.000000 -> 4065.000000
+
+yolo_effective_fps
+  n      : 10
+  Mean±SD: 14.727259 ± 0.580646
+  Median : 14.841844
+  Min-Max: 13.696667 -> 15.502417
+
+yolo_inference_mean_ms
+  n      : 10
+  Mean±SD: 52.644295 ± 1.232838
+  Median : 52.571888
+  Min-Max: 50.425638 -> 54.229166
+
+yolo_inference_p95_ms
+  n      : 10
+  Mean±SD: 67.051861 ± 2.549530
+  Median : 67.006918
+  Min-Max: 62.296488 -> 71.465184
+
+yolo_overlap_start_s
+  n      : 10
+  Mean±SD: 70.788100 ± 43.469110
+  Median : 55.691000
+  Min-Max: 42.702000 -> 181.160000
+
+yolo_overlap_end_s
+  n      : 10
+  Mean±SD: 308.837100 ± 46.119803
+  Median : 290.731000
+  Min-Max: 280.096000 -> 427.249000
+
+yolo_overlap_duration_s
+  n      : 10
+  Mean±SD: 238.049000 ± 9.833013
+  Median : 237.944500
+  Min-Max: 223.629000 -> 258.992000
+
+camera_info_overlap_frames
+  n      : 10
+  Mean±SD: 4715.600000 ± 314.179071
+  Median : 4722.000000
+  Min-Max: 4268.000000 -> 5218.000000
+
+yolo_overlap_frames
+  n      : 10
+  Mean±SD: 3527.100000 ± 221.320507
+  Median : 3480.000000
+  Min-Max: 3277.000000 -> 3867.000000
+
+yolo_timestamp_matched_frames
+  n      : 10
+  Mean±SD: 3525.900000 ± 220.987405
+  Median : 3477.500000
+  Min-Max: 3277.000000 -> 3865.000000
+
+camera_info_unmatched_frames
+  n      : 10
+  Mean±SD: 1189.700000 ± 117.414792
+  Median : 1211.500000
+  Min-Max: 991.000000 -> 1365.000000
+
+yolo_stamps_absent_from_monitor
+  n      : 10
+  Mean±SD: 1.200000 ± 1.316561
+  Median : 1.000000
+  Min-Max: 0.000000 -> 4.000000
+
+camera_info_overlap_rate_hz
+  n      : 10
+  Mean±SD: 19.798114 ± 0.862289
+  Median : 20.007839
+  Min-Max: 17.925559 -> 20.789227
+
+yolo_overlap_source_rate_fps
+  n      : 10
+  Mean±SD: 14.810182 ± 0.628209
+  Median : 14.980601
+  Min-Max: 13.770795 -> 15.709764
+
+yolo_timestamp_matching_ratio_percent
+  n      : 10
+  Mean±SD: 74.800700 ± 1.354960
+  Median : 74.423500
+  Min-Max: 73.365000 -> 76.781000
+
+yolo_predict_mean_ms
+  n      : 10
+  Mean±SD: 52.614800 ± 1.248242
+  Median : 52.558000
+  Min-Max: 50.383000 -> 54.224000
+
+yolo_predict_median_ms
+  n      : 10
+  Mean±SD: 51.475400 ± 1.450696
+  Median : 51.271000
+  Min-Max: 49.503000 -> 53.674000
+
+yolo_predict_p95_ms
+  n      : 10
+  Mean±SD: 66.939500 ± 2.639599
+  Median : 66.538000
+  Min-Max: 61.899000 -> 71.455000
+
+yolo_predict_p99_ms
+  n      : 10
+  Mean±SD: 77.377800 ± 1.767884
+  Median : 77.663000
+  Min-Max: 72.938000 -> 79.224000
+
+yolo_predict_max_ms
+  n      : 10
+  Mean±SD: 86.169200 ± 1.961788
+  Median : 86.130000
+  Min-Max: 82.062000 -> 89.586000
+
+yolo_callback_mean_ms
+  n      : 10
+  Mean±SD: 53.259600 ± 1.259290
+  Median : 53.208000
+  Min-Max: 51.009000 -> 54.872000
+

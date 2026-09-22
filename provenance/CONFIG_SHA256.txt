@@ -1,0 +1,24 @@
+Configuration provenance and SHA-256
+
+Cartographer retained final/evaluated configuration:
+configs/cartographer/turtlebot3_lds_2d.lua
+SHA256:
+4967deba06cbf5c30e45e42eff4fc53e209391c1dc13fdf23bb3bc3393b4d706
+
+Important Cartographer provenance note:
+The retained final Cartographer Lua configuration is provided for reproducibility.
+A separate cryptographic hash of this Lua file was not archived independently for
+every official run; therefore per-run cryptographic identity is not claimed.
+
+RTAB-Map official launch configuration:
+configs/rtabmap/rtab.launch.py
+SHA256:
+f7b41954430f3b907f554b36ee09c5dc4c10e18adf537b0db6d17ee006cada5a
+
+RTAB-Map provenance:
+This SHA-256 was verified across all 20 official RTAB-Map-related analyzed runs.
+
+The alternative workspace file:
+turtlebot3_rtab/turtlebot3_rtab/launch/rtab.launch.py
+was not selected as the archived official run configuration because its SHA-256
+does not match the configuration hash recorded for the official experiments.

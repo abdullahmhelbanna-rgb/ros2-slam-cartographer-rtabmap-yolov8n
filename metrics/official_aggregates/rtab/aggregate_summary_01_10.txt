@@ -1,0 +1,156 @@
+========================================================================
+AGGREGATE RESULTS: rtab Experiments 01-10
+========================================================================
+
+Experiments found: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10
+VALID experiments: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10
+Missing experiments: None
+
+IMPORTANT:
+n is calculated independently for each metric.
+A metric with missing measurements in Experiment 01 is NOT filled or imputed.
+Therefore localization metrics may have n=10 while performance metrics may have n=9.
+SD is between-run sample standard deviation (ddof=1).
+
+========================================================================
+MEAN ± BETWEEN-RUN SD
+========================================================================
+
+matched_poses
+  n      : 10
+  Mean±SD: 2928.900000 ± 347.004787
+  Median : 2945.000000
+  Min-Max: 2399.000000 -> 3517.000000
+
+possible_poses
+  n      : 10
+  Mean±SD: 2937.500000 ± 346.646874
+  Median : 2952.000000
+  Min-Max: 2405.000000 -> 3523.000000
+
+matched_percent
+  n      : 10
+  Mean±SD: 99.702976 ± 0.156643
+  Median : 99.759161
+  Min-Max: 99.338964 -> 99.829691
+
+ape_translation_rmse_m
+  n      : 10
+  Mean±SD: 0.014013 ± 0.003691
+  Median : 0.013859
+  Min-Max: 0.008562 -> 0.022756
+
+ape_translation_mean_m
+  n      : 10
+  Mean±SD: 0.009965 ± 0.002450
+  Median : 0.009959
+  Min-Max: 0.006249 -> 0.015026
+
+ape_yaw_rmse_deg
+  n      : 10
+  Mean±SD: 0.212621 ± 0.043036
+  Median : 0.210632
+  Min-Max: 0.148031 -> 0.307319
+
+ape_yaw_mean_deg
+  n      : 10
+  Mean±SD: 0.159360 ± 0.032910
+  Median : 0.153363
+  Min-Max: 0.112289 -> 0.234979
+
+rpe_translation_1m_rmse_m
+  n      : 10
+  Mean±SD: 0.006209 ± 0.001787
+  Median : 0.005862
+  Min-Max: 0.004070 -> 0.009754
+
+rpe_translation_1m_mean_m
+  n      : 10
+  Mean±SD: 0.003364 ± 0.000442
+  Median : 0.003452
+  Min-Max: 0.002653 -> 0.004071
+
+rpe_yaw_1m_rmse_deg
+  n      : 10
+  Mean±SD: 0.157629 ± 0.013735
+  Median : 0.158912
+  Min-Max: 0.127076 -> 0.175061
+
+rpe_yaw_1m_mean_deg
+  n      : 10
+  Mean±SD: 0.118022 ± 0.011064
+  Median : 0.119977
+  Min-Max: 0.093680 -> 0.132529
+
+process_cpu_mean_percent
+  n      : 10
+  Mean±SD: 12.344308 ± 0.638866
+  Median : 12.225973
+  Min-Max: 11.762136 -> 13.946154
+
+process_cpu_p95_percent
+  n      : 10
+  Mean±SD: 18.453000 ± 0.896739
+  Median : 18.347500
+  Min-Max: 17.200000 -> 20.660000
+
+process_ram_mean_mb
+  n      : 10
+  Mean±SD: 482.189084 ± 16.722971
+  Median : 479.905119
+  Min-Max: 455.991687 -> 516.941395
+
+process_ram_p95_mb
+  n      : 10
+  Mean±SD: 587.897246 ± 39.183286
+  Median : 584.150586
+  Min-Max: 519.333789 -> 656.375781
+
+system_cpu_mean_percent
+  n      : 10
+  Mean±SD: 9.499084 ± 0.231444
+  Median : 9.448027
+  Min-Max: 9.242643 -> 9.929183
+
+system_ram_mean_percent
+  n      : 10
+  Mean±SD: 47.146027 ± 1.136144
+  Median : 46.708420
+  Min-Max: 45.976774 -> 48.952991
+
+lidar_rate_hz
+  n      : 10
+  Mean±SD: 7.999578 ± 0.001003
+  Median : 7.999885
+  Min-Max: 7.996727 -> 7.999971
+
+camera_rate_hz
+  n      : 10
+  Mean±SD: 20.257991 ± 0.413548
+  Median : 20.252988
+  Min-Max: 19.402475 -> 20.899546
+
+slam_tf_rate_hz
+  n      : 10
+  Mean±SD: 9.999643 ± 0.001128
+  Median : 10.000000
+  Min-Max: 9.996432 -> 10.000000
+
+slam_tf_latency_mean_ms
+  n      : 10
+  Mean±SD: 62.283710 ± 0.284853
+  Median : 62.310140
+  Min-Max: 61.926100 -> 62.750550
+
+slam_tf_latency_p95_ms
+  n      : 10
+  Mean±SD: 118.631092 ± 0.307866
+  Median : 118.627805
+  Min-Max: 118.056221 -> 119.044060
+
+gazebo_rtf_overall
+  n      : 10
+  Mean±SD: 0.998493 ± 0.000106
+  Median : 0.998521
+  Min-Max: 0.998351 -> 0.998683
+

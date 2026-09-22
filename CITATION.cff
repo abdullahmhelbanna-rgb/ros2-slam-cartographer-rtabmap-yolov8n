@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the associated manuscript and the archived reproducibility package."
+
+title: "Comparative Analysis Of Real-Time Appearance-Based Mapping And Cartographer Algorithms Using Deep Learning Object Detection"
+
+authors:
+  - family-names: "El-Banna"
+    given-names: "Abdullah Mohamed Abdelftah"
+  - family-names: "Nasser"
+    given-names: "Bahaa El-Din Mohamed"
+  - family-names: "Saraya"
+    given-names: "Mohamed Sabry"
+  - family-names: "Eraky"
+    given-names: "Mohamed Taher Hamed"
+
+repository-code: "https://github.com/abdullahmhelbanna-rgb/ros2-slam-cartographer-rtabmap-yolov8n"
+
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22878936"
+    description: "Archived reproducibility package"
+
+keywords:
+  - ROS 2
+  - SLAM
+  - Cartographer
+  - RTAB-Map
+  - YOLOv8n
+  - TurtleBot3
+  - mapping
+  - localization
+  - reproducibility

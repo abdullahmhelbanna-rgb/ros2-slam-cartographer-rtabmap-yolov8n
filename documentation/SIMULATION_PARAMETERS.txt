@@ -1,0 +1,121 @@
+SIMULATION PARAMETERS
+=====================
+
+World
+-----
+small_house.world
+
+Physics engine:
+ODE
+
+max_step_size:
+0.001 s
+
+real_time_factor target:
+1.0
+
+real_time_update_rate:
+1000 Hz
+
+
+TurtleBot3 Waffle Pi LiDAR
+--------------------------
+Topic:
+/scan
+
+Nominal update rate:
+8 Hz
+
+Horizontal samples:
+360
+
+Angular range:
+0.000000 to 6.280000 rad
+
+Minimum range:
+0.12 m
+
+Maximum range:
+4.5 m
+
+Range resolution:
+0.015 m
+
+Noise:
+Gaussian
+mean = 0.0 m
+stddev = 0.01 m
+
+
+RGB Camera
+----------
+Topics:
+/camera/image_raw
+/camera/camera_info
+
+Nominal update rate:
+30 Hz
+
+Resolution:
+640 x 480
+
+Image format:
+R8G8B8
+
+Horizontal FOV:
+1.085595 rad
+
+Near clipping:
+0.03 m
+
+Far clipping:
+100 m
+
+Gaussian image noise:
+mean = 0.0
+stddev = 0.007
+
+
+Differential Drive
+------------------
+Update rate:
+30 Hz
+
+Wheel separation:
+0.287 m
+
+Wheel diameter:
+0.066 m
+
+Maximum wheel torque:
+20
+
+Maximum wheel acceleration:
+1.0
+
+Odometry source:
+0 (encoder/wheel based)
+
+
+Wheel Contact Friction
+----------------------
+ODE mu:
+100000
+
+ODE mu2:
+100000
+
+
+Independent Ground Truth
+------------------------
+Plugin:
+libgazebo_ros_p3d.so
+
+Namespace:
+/ground_truth
+
+Body:
+base_link
+
+Update rate:
+50 Hz

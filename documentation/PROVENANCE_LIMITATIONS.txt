@@ -1,0 +1,36 @@
+CONFIGURATION AND PROVENANCE NOTES
+==================================
+
+RTAB-Map
+--------
+The same archived RTAB-Map launch configuration was used across
+all 20 analyzed RTAB-Map-related runs.
+
+Archived launch SHA-256:
+f7b41954430f3b907f554b36ee09c5dc4c10e18adf537b0db6d17ee006cada5a
+
+Cartographer
+------------
+The final evaluated Cartographer Lua configuration is included
+in this archive.
+
+However, a separate copy/hash of the Lua configuration was not
+archived inside every Cartographer run directory. Therefore,
+per-run cryptographic identity of the Cartographer Lua file is
+not claimed.
+
+Ground truth
+------------
+Independent Gazebo ground truth was used only for evaluation.
+Neither Cartographer nor RTAB-Map subscribes to
+/ground_truth/odom.
+
+YOLOv8n
+-------
+YOLOv8n ran as a concurrent CPU perception workload.
+Its detections were not supplied to either SLAM pipeline.
+
+Visualization
+-------------
+No reported quantitative metric was derived from RViz2 or
+rtabmap_viz.

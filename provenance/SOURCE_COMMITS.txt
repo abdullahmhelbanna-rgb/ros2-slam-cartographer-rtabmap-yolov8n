@@ -1,0 +1,22 @@
+Source provenance for the Scientific Reports reproducibility repository
+
+Manuscript:
+Comparative Analysis Of Real-Time Appearance-Based Mapping And Cartographer Algorithms Using Deep Learning Object Detection
+
+TurtleBot3 source commit:
+da785b7201d317e6e2a662e41bb3d3fd50ebd503
+
+TurtleBot3 simulations source commit:
+a35a56c8b04877dc89772b598084d8ce648a9023
+
+Software environment:
+Ubuntu 22.04 LTS
+ROS 2 Humble
+Gazebo Classic 11.10.2
+evo 1.34.3
+
+Notes:
+- The source commit identifiers above refer to the original workspace repositories.
+- The copies stored under this GitHub repository do not retain independent nested .git metadata.
+- Gazebo ground truth was used only for evaluation and was not supplied to either SLAM back end.
+- YOLOv8n detections were not supplied to Cartographer or RTAB-Map.

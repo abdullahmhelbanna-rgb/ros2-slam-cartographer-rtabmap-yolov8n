@@ -1,0 +1,20 @@
+ANALYZED DATASET MANIFEST
+=========================
+
+Cartographer:
+experiment_01 to experiment_10
+
+Cartographer + YOLOv8n:
+experiment_01 to experiment_10
+
+RTAB-Map:
+experiment_01 to experiment_10
+
+RTAB-Map + YOLOv8n:
+experiment_01 to experiment_10
+
+Total analyzed runs:
+40
+
+Pilot, setup-validation, superseded, backup, and failed
+directories are intentionally excluded from this analyzed package.

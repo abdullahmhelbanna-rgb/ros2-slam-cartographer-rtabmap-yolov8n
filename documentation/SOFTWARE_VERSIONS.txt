@@ -1,0 +1,26 @@
+SOFTWARE VERSIONS
+=================
+
+ROS:
+ROS 2 Humble Hawksbill
+
+Gazebo:
+Gazebo Classic 11.10.2
+
+evo:
+v1.34.3
+
+cartographer_ros:
+2.0.9002
+
+turtlebot3_cartographer:
+2.3.6
+
+turtlebot3_gazebo:
+2.3.8
+
+rtabmap_ros:
+0.22.1
+
+rtabmap_slam:
+0.22.1
