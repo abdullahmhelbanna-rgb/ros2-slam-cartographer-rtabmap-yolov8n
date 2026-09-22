@@ -1,8 +1,8 @@
-# Comparative Analysis of Cartographer and RTAB-Map under Concurrent YOLOv8n Object Detection in ROS 2
+# Comparative Analysis Of Real-Time Appearance-Based Mapping And Cartographer Algorithms Using Deep Learning Object Detection
 
 This repository contains the ROS 2 simulation, SLAM, monitoring, trajectory-processing, and evaluation code associated with the manuscript:
 
-> **Comparative Analysis of Cartographer and RTAB-Map under Concurrent YOLOv8n Object Detection in ROS 2**
+> **Comparative Analysis Of Real-Time Appearance-Based Mapping And Cartographer Algorithms Using Deep Learning Object Detection**
 
 The study compares two complete ROS 2 SLAM pipelines—Cartographer and RTAB-Map—under baseline conditions and while a separate YOLOv8n object-detection node runs concurrently on the CPU.
 
@@ -261,7 +261,7 @@ If you use this repository or the accompanying dataset, please cite the associat
 
 **Manuscript**
 
-Abdullah Mohamed Abdelftah El-Banna, Bahaa El-Din Mohamed Nasser, Mohamed Sabry Saraya, and Mohamed Taher Hamed Eraky. *Comparative Analysis of Cartographer and RTAB-Map under Concurrent YOLOv8n Object Detection in ROS 2.* Scientific Reports, manuscript under revision.
+Abdullah Mohamed Abdelftah El-Banna, Bahaa El-Din Mohamed Nasser, Mohamed Sabry Saraya, and Mohamed Taher Hamed Eraky. *Comparative Analysis Of Real-Time Appearance-Based Mapping And Cartographer Algorithms Using Deep Learning Object Detection.* Scientific Reports, manuscript under revision.
 
 **Reproducibility archive**
 
