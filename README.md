@@ -1,441 +1,274 @@
-# Comparative Analysis of Real-Time Appearance-Based Mapping and Cartographer Algorithms Using Deep Learning Object Detection
+# Comparative Analysis of Cartographer and RTAB-Map under Concurrent YOLOv8n Object Detection in ROS 2
 
-This repository contains the ROS 2 simulation workflow, configuration files, trajectory logs, and evaluation commands used for a comparative study of two LiDAR-based SLAM frameworks:
+This repository contains the ROS 2 simulation, SLAM, monitoring, trajectory-processing, and evaluation code associated with the manuscript:
 
-- Google Cartographer
-- RTAB-Map with ICP odometry
+> **Comparative Analysis of Cartographer and RTAB-Map under Concurrent YOLOv8n Object Detection in ROS 2**
 
-The experiments use a TurtleBot3 Waffle Pi in an indoor Gazebo House World environment. Each framework is evaluated in a baseline configuration and while a YOLOv8n object-detection and visualization workload runs concurrently.
+The study compares two complete ROS 2 SLAM pipelines—Cartographer and RTAB-Map—under baseline conditions and while a separate YOLOv8n object-detection node runs concurrently on the CPU.
 
-> **Important scope note:** YOLOv8n is used as a concurrent perception workload. Its detections are visualized through the `semantic_fusion` nodes and are **not** injected into the Cartographer or RTAB-Map SLAM back end in the final reported workflow.
+## Study scope
 
----
-
-## Study configurations
-
-The reported comparison includes four configurations:
+Four configurations were analyzed:
 
 1. Cartographer
-2. Cartographer + YOLOv8n + fusion visualization
+2. Cartographer + YOLOv8n
 3. RTAB-Map
-4. RTAB-Map + YOLOv8n + fusion visualization
+4. RTAB-Map + YOLOv8n
 
-The simulator provides the ground-truth trajectory through `/ground_truth/odom`. The estimated SLAM trajectory is collected from the TF transform:
+Ten analyzed runs were completed for each configuration (**40 runs total**).
 
-```text
-map -> base_footprint
-```
+YOLOv8n is used only as a concurrent perception workload. Its detections are **not** supplied to Cartographer or RTAB-Map for scan matching, pose estimation, loop closure, graph optimization, or occupancy-grid generation. Legacy source/package/window names containing `fusion` refer to visualization code only and do not indicate semantic fusion into the SLAM back ends.
 
-All trajectory logging is performed at **10 Hz** using simulation time.
+## Reproducibility archive
 
----
+The complete 40-run reproducibility package, aggregate outputs, configuration snapshots, evaluation scripts, runtime logs, and integrity manifests are archived on Zenodo:
 
-## System overview
+**Version-specific DOI:** https://doi.org/10.5281/zenodo.22878936
+
+Zenodo record: **v1.1.0**
+
+The Zenodo archive is the authoritative source for the full analyzed dataset used in the revised manuscript. This GitHub repository provides the corresponding source code and lightweight project material.
+
+## Experimental platform
 
 | Component | Configuration |
 |---|---|
-| Robot platform | TurtleBot3 Waffle Pi |
-| Operating system | Ubuntu 22.04 LTS |
-| ROS distribution | ROS 2 Humble |
-| Simulation | Gazebo House World |
-| SLAM sensors | 2D LiDAR |
-| Perception sensor | Simulated RGB camera |
-| Object detector | YOLOv8n |
-| Ground-truth topic | `/ground_truth/odom` |
-| SLAM trajectory source | TF: `map -> base_footprint` |
-| Trajectory format | TUM |
-| Evaluation toolkit | EVO |
-| Logging rate | 10 Hz |
+| Robot | TurtleBot3 Waffle Pi |
+| OS | Ubuntu 22.04 LTS |
+| ROS | ROS 2 Humble Hawksbill |
+| Simulator | Gazebo Classic 11.10.2 |
+| World | `small_house.world` |
+| Cartographer ROS | `cartographer_ros` 2.0.9002 |
+| TurtleBot3 Cartographer | 2.3.6 |
+| TurtleBot3 Gazebo | 2.3.8 |
+| RTAB-Map ROS | `rtabmap_ros` / `rtabmap_slam` 0.22.1 |
+| Trajectory evaluation | evo v1.34.3 |
+| Object detector | YOLOv8n, CPU-only |
 
----
-
-## Repository layout
-
-A recommended clean repository structure is:
+TurtleBot3 source commit:
 
 ```text
-turtlebot3_ws/
-├── src/
-│   ├── turtlebot3/
-│   ├── turtlebot3_cartographer/
-│   ├── turtlebot3_rtab/
-│   ├── turtlebot3_gazebo/
-│   ├── semantic_fusion/
-│   └── ... other ROS 2 packages
-├── tools/
-│   ├── log_gt_odom_pose.py
-│   ├── log_slam_pose.py
-│   └── analyze_trajectories.py
-├── metrics/
-│   ├── cartographer/
-│   ├── cartographer_yolo/
-│   ├── rtabmap/
-│   └── rtab_yolo/
-├── maps/
-├── figures/
-├── README.md
-└── requirements.txt
+da785b7201d317e6e2a662e41bb3d3fd50ebd503
 ```
 
-Do not include generated ROS workspace folders such as `build/`, `install/`, or `log/` in the public repository.
-
----
-
-## Prerequisites
-
-Install ROS 2 Humble and the ROS packages required by the workspace. Then build the workspace:
-
-```bash
-cd ~/turtlebot3_ws
-colcon build
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-```
-
-Set the robot model and ROS domain ID used in the reported workflow:
-
-```bash
-export TURTLEBOT3_MODEL=waffle_pi
-export ROS_DOMAIN_ID=30
-```
-
-### Python tools
-
-The workflow requires Python packages used by YOLOv8n and trajectory evaluation. A typical environment includes:
-
-```bash
-pip install ultralytics evo numpy matplotlib opencv-python
-```
-
-Install any additional package dependencies declared by the ROS packages in `src/`.
-
----
-
-## Common simulation setup
-
-Start each terminal with:
-
-```bash
-cd ~/turtlebot3_ws
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-export TURTLEBOT3_MODEL=waffle_pi
-export ROS_DOMAIN_ID=30
-```
-
-Launch Gazebo:
-
-```bash
-ros2 launch turtlebot3_gazebo house.launch.py
-```
-
-Useful checks:
-
-```bash
-ros2 topic echo /ground_truth/odom --once
-ros2 topic echo /clock --once
-ros2 topic info /odom
-ros2 topic info /ground_truth/odom
-```
-
----
-
-## A. Cartographer baseline
-
-### Terminal 1 — Gazebo
-
-```bash
-ros2 launch turtlebot3_gazebo house.launch.py
-```
-
-### Terminal 2 — Cartographer
-
-```bash
-ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=true
-```
-
-Optional TF check:
-
-```bash
-timeout 5s ros2 run tf2_ros tf2_echo map base_footprint
-```
-
-### Terminal 3 — Ground-truth logger
-
-```bash
-python3 ~/turtlebot3_ws/tools/log_gt_odom_pose.py --ros-args \
-  -p use_sim_time:=true \
-  -p topic:=/ground_truth/odom \
-  -p outfile:=~/turtlebot3_ws/metrics/cartographer/gt_gazebo_tum.txt
-```
-
-### Terminal 4 — SLAM logger
-
-```bash
-python3 ~/turtlebot3_ws/tools/log_slam_pose.py --ros-args \
-  -p use_sim_time:=true \
-  -p map_frame:=map \
-  -p base_frame:=base_footprint \
-  -p rate_hz:=10.0 \
-  -p outfile:=~/turtlebot3_ws/metrics/cartographer/slam_tum.txt
-```
-
-### Terminal 5 — Teleoperation
-
-```bash
-ros2 run turtlebot3_teleop teleop_keyboard
-```
-
----
-
-## B. Cartographer + YOLOv8n + fusion visualization
-
-Run Gazebo, Cartographer, and both loggers as in the Cartographer baseline. Then add:
-
-### Terminal 3 — YOLOv8n
-
-```bash
-ros2 run semantic_fusion yolo_node --ros-args \
-  -p use_sim_time:=true \
-  -r image:=/camera/image_raw \
-  -r camera_info:=/camera/camera_info \
-  --log-level info
-```
-
-### Terminal 4 — Fusion visualization
-
-```bash
-ros2 run semantic_fusion fusion_node_master --ros-args \
-  -p use_sim_time:=true \
-  -p map_frame:=map \
-  -p base_frame:=base_footprint \
-  --log-level info
-```
-
-Use separate output paths, for example:
+TurtleBot3 simulations source commit:
 
 ```text
-metrics/cartographer_yolo/gt_gazebo_tum.txt
-metrics/cartographer_yolo/slam_tum.txt
+a35a56c8b04877dc89772b598084d8ce648a9023
 ```
 
----
+## Simulation and sensor model
 
-## C. RTAB-Map baseline
+The evaluated Gazebo setup used:
 
-Before each RTAB-Map run, remove any prior RTAB-Map database to prevent carry-over between experiments:
+- ODE physics engine
+- `max_step_size = 0.001 s`
+- target `real_time_factor = 1.0`
+- `real_time_update_rate = 1000 Hz`
+- Waffle Pi wheel-contact ODE friction: `mu = 100000`, `mu2 = 100000`
 
-```bash
-rm -f ~/.ros/rtabmap.db
-```
+### 2D LiDAR
 
-### Terminal 1 — Gazebo
+- topic: `/scan`
+- nominal update rate: 8 Hz
+- 360 horizontal samples
+- range: 0.12–4.5 m
+- range resolution: 0.015 m
+- Gaussian range noise: mean 0 m, SD 0.01 m
 
-```bash
-ros2 launch turtlebot3_gazebo house.launch.py
-```
+### RGB camera
 
-### Terminal 2 — RTAB-Map
+- topics: `/camera/image_raw`, `/camera/camera_info`
+- resolution: 640 × 480
+- nominal update rate: 30 Hz
+- horizontal FOV: 1.085595 rad
+- Gaussian image noise SD: 0.007
 
-```bash
-ros2 launch turtlebot3_rtab rtab.launch.py delete_db_on_start:=true
-```
+## Odometry and ground-truth isolation
 
-### Terminal 3 — Ground-truth logger
-
-```bash
-python3 ~/turtlebot3_ws/tools/log_gt_odom_pose.py --ros-args \
-  -p use_sim_time:=true \
-  -p topic:=/ground_truth/odom \
-  -p outfile:=~/turtlebot3_ws/metrics/rtabmap/gt_gazebo_tum.txt
-```
-
-### Terminal 4 — SLAM logger
-
-```bash
-python3 ~/turtlebot3_ws/tools/log_slam_pose.py --ros-args \
-  -p use_sim_time:=true \
-  -p map_frame:=map \
-  -p base_frame:=base_footprint \
-  -p rate_hz:=10.0 \
-  -p outfile:=~/turtlebot3_ws/metrics/rtabmap/slam_tum.txt
-```
-
-### Terminal 5 — Teleoperation
-
-```bash
-ros2 run turtlebot3_teleop teleop_keyboard
-```
-
----
-
-## D. RTAB-Map + YOLOv8n + fusion visualization
-
-Run the RTAB-Map baseline procedure, then add:
-
-```bash
-ros2 run semantic_fusion yolo_node --ros-args \
-  -p use_sim_time:=true \
-  --log-level info
-```
-
-```bash
-ros2 run semantic_fusion fusion_node_master --ros-args \
-  -p use_sim_time:=true \
-  -p map_frame:=map \
-  -p base_frame:=base_footprint \
-  --log-level info
-```
-
-Use separate output paths, for example:
+The Gazebo differential-drive plugin uses:
 
 ```text
-metrics/rtab_yolo/gt_gazebo_tum.txt
-metrics/rtab_yolo/slam_tum.txt
+odometry_source = 0
 ```
 
----
+Therefore `/odom` represents simulated wheel/encoder odometry.
 
-## Trajectory evaluation
+Independent simulator ground truth is produced by a separate Gazebo P3D plugin under `/ground_truth` and is used **only for evaluation**. Neither Cartographer nor RTAB-Map subscribes to `/ground_truth/odom`.
 
-The ground-truth and SLAM trajectories are stored in TUM format:
+### Cartographer inputs
+
+- `/scan`
+- `/odom`
+- IMU disabled
+
+Key retained configuration values include:
+
+- `tracking_frame = base_footprint`
+- `use_odometry = true`
+- `use_imu_data = false`
+- LiDAR range: 0.12–4.5 m
+
+The retained final Cartographer Lua configuration is included in the reproducibility archive. A separate per-run hash of the Cartographer Lua file was not preserved for every run, so per-run cryptographic identity of that file is not claimed.
+
+### RTAB-Map inputs
+
+- `/scan`
+- `/odom`
+- RGB image and camera info
+- depth / RGB-D disabled
+- IMU intentionally excluded
+
+The archived RTAB-Map launch file was identical across all 20 RTAB-Map-related analyzed runs. Its SHA-256 was:
+
+```text
+f7b41954430f3b907f554b36ee09c5dc4c10e18adf537b0db6d17ee006cada5a
+```
+
+The evaluated RTAB-Map pipeline uses external `/odom` together with 2D LiDAR ICP geometric registration and RGB appearance information. It should not be described as an ICP-odometry front end because local odometry is supplied externally.
+
+## Trajectory logging and evaluation
+
+Ground-truth and SLAM trajectories are stored in TUM format:
 
 ```text
 timestamp tx ty tz qx qy qz qw
 ```
 
-### Absolute Pose Error (APE)
+Before evaluation, both reference and estimated trajectories are converted to a planar **x-y-yaw** representation.
 
-Translation-only APE after alignment:
+### Timestamp association
 
-```bash
-evo_ape tum gt_gazebo_tum.txt slam_tum.txt -a -r trans_part
+Maximum association difference:
+
+```text
+--t_max_diff 0.02
 ```
 
-### Relative Pose Error (RPE)
+No interpolation is performed. Samples without a match inside the 20 ms tolerance are excluded.
 
-Translation-only RPE with a 1 m displacement interval:
+### APE translation
 
 ```bash
-evo_rpe tum gt_gazebo_tum.txt slam_tum.txt \
-  --delta 1 \
-  --delta_unit m \
-  --all_pairs \
-  -a \
+evo_ape tum GT EST \
+  --t_max_diff 0.02 \
+  --align_origin \
   -r trans_part
 ```
 
-### Trajectory plotting
+### APE yaw
 
 ```bash
-evo_traj tum \
-  gt_gazebo_tum.txt \
-  slam_tum.txt \
-  --ref gt_gazebo_tum.txt \
-  -a \
-  --plot \
-  --plot_mode=xy
+evo_ape tum GT EST \
+  --t_max_diff 0.02 \
+  --align_origin \
+  -r angle_deg
 ```
 
-The `-a` option applies trajectory alignment before evaluation. The reported analysis uses translation-only errors (`trans_part`).
+APE uses **origin alignment only**. No full-trajectory SE(3)/Umeyama best-fit alignment is used.
 
----
-
-## Saving occupancy maps
-
-Save a generated occupancy-grid map using:
+### RPE translation at 1 m
 
 ```bash
-ros2 run nav2_map_server map_saver_cli -f ~/output_map --ros-args -r map:=/map
+evo_rpe tum GT EST \
+  --t_max_diff 0.02 \
+  --delta 1 \
+  --delta_unit m \
+  --all_pairs \
+  -r trans_part
 ```
 
-This creates:
+### RPE yaw at 1 m
 
-```text
-output_map.pgm
-output_map.yaml
+```bash
+evo_rpe tum GT EST \
+  --t_max_diff 0.02 \
+  --delta 1 \
+  --delta_unit m \
+  --all_pairs \
+  -r angle_deg
 ```
 
-Place final maps used in the manuscript under:
+RPE uses no global alignment.
+
+## Repeated-run statistics
+
+Each configuration contains 10 analyzed runs. Metrics are computed separately for each run and then summarized as:
+
+**mean ± between-run sample standard deviation (n = 10)**
+
+The revised manuscript reports both translation and yaw APE/RPE. Individual run-level values are provided in Supplementary Table S1 and the complete archived run outputs are available in Zenodo.
+
+## Runtime and resource monitoring
+
+The final workflow records:
+
+- SLAM process CPU and resident memory (RSS)
+- YOLO process CPU and RSS in workload runs
+- combined monitored process CPU/RSS
+- LiDAR rate
+- camera source rate
+- SLAM TF publication rate
+- LiDAR-to-global-TF wall-time latency proxy
+- Gazebo real-time factor
+- YOLO effective FPS
+- YOLO inference time
+- camera-to-YOLO source-timestamp coverage
+
+`psutil` process CPU may exceed 100% because it follows multicore semantics.
+
+YOLOv8n ran on CPU; CUDA/GPU inference was not used in the analyzed workload runs.
+
+## Important interpretation limits
+
+The robot was manually teleoperated. The four groups therefore did **not** follow identical trajectories or sensor sequences. Run duration, path length, linear speed, angular speed, and accumulated rotation were quantified from ground truth.
+
+Accordingly:
+
+- baseline-to-YOLO localization differences are **descriptive observations**, not causal estimates of a YOLO workload effect;
+- the study does not claim that one framework is intrinsically more robust to computational load;
+- no matched synthetic CPU-load control was performed;
+- no identical waypoint/sensor replay experiment was performed;
+- occupancy maps are illustrative/reproducibility outputs only and are not used for quantitative map-quality ranking.
+
+## Repository layout
+
+The repository contains project source code and supporting material, including directories such as:
 
 ```text
+figures/
 maps/
-```
-
-Suggested names:
-
-```text
-cartographer_baseline.pgm
-cartographer_baseline.yaml
-cartographer_yolov8n.pgm
-cartographer_yolov8n.yaml
-rtabmap_baseline.pgm
-rtabmap_baseline.yaml
-rtabmap_yolov8n.pgm
-rtabmap_yolov8n.yaml
-```
-
----
-
-## Reproducibility notes
-
-- Keep the robot model, Gazebo world, ROS topic structure, TF conventions, and simulation-time settings unchanged across all configurations.
-- Use `use_sim_time:=true` for the SLAM, YOLOv8n, fusion, and trajectory-logger nodes.
-- Use the same navigation/teleoperation strategy for all compared configurations.
-- Start each RTAB-Map run with a clean database.
-- Store each repeated run in a separate, clearly named folder before aggregation.
-- The EVO `STD` output describes the spread of trajectory-error samples within one evaluated trajectory; it is not a between-run standard deviation.
-
-A recommended naming convention for future repeated experiments is:
-
-```text
 metrics/
-├── cartographer/run_01 ... run_04
-├── cartographer_yolo/run_01 ... run_04
-├── rtabmap/run_01 ... run_04
-└── rtab_yolo/run_01 ... run_04
+src/
+tools/
 ```
 
----
+The full 40-run archival dataset should be obtained from the Zenodo release rather than reconstructed from the lightweight GitHub repository alone.
 
 ## Data and code availability
 
-The repository is intended to include:
+Full reproducibility archive:
 
-- ROS 2 launch files and configuration files
-- `semantic_fusion` source code
-- trajectory loggers
-- final TUM trajectory files
-- EVO evaluation outputs
-- occupancy-grid maps
-- manuscript figures
+https://doi.org/10.5281/zenodo.22878936
 
-For an archival release, create a tagged GitHub release and archive it in Zenodo to obtain a permanent DOI.
+Source repository:
 
----
+https://github.com/abdullahmhelbanna-rgb/ros2-slam-cartographer-rtabmap-yolov8n
 
 ## Citation
 
-If you use this repository, please cite the associated manuscript:
+If you use this repository or the accompanying dataset, please cite the associated manuscript and the Zenodo archive.
 
-```text
-Abdullah Mohamed Abdelftah El-Banna, Bahaa Nasser,
-Mohamed Sabry Saraya, and Mohamed T. Eraky.
-Comparative Analysis of Real-Time Appearance-Based Mapping and
-Cartographer Algorithms Using Deep Learning Object Detection.
-[Journal / DOI to be added after publication]
-```
+**Manuscript**
 
----
+Abdullah Mohamed Abdelftah El-Banna, Bahaa El-Din Mohamed Nasser, Mohamed Sabry Saraya, and Mohamed Taher Hamed Eraky. *Comparative Analysis of Cartographer and RTAB-Map under Concurrent YOLOv8n Object Detection in ROS 2.* Scientific Reports, manuscript under revision.
 
-## License
+**Reproducibility archive**
 
-Add a license before public release. For an academic code repository, one possible option is the MIT License. For data or figures that should not be reused freely, specify a separate data/figure license.
-
----
+El-Banna, A. M. A. et al. ROS 2 SLAM Benchmark Reproducibility Package for Cartographer, RTAB-Map, and YOLOv8n Evaluation, Version v1.1.0. Zenodo. https://doi.org/10.5281/zenodo.22878936 (2026).
 
 ## Contact
 
-**Abdullah Mohamed Abdelftah El-Banna**  
+Abdullah Mohamed Abdelftah El-Banna  
 Mechatronics Engineering Program, Faculty of Engineering, Mansoura University, Egypt  
 Email: abdullah.elbanna@must.edu.eg
